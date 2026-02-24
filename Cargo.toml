@@ -10,13 +10,13 @@ homepage = "https://loco.rs/"
 keywords = ["loco", "oauth2"]
 categories = ["web-programming"]
 
-[lib]
-path = "src/lib.rs"
-
 [profile.dev]
 opt-level = 1
 [profile.dev.package."*"]
 opt-level = 3
+
+[lib]
+path = "src/lib.rs"
 
 [dependencies]
 async-trait = "0.1"
@@ -29,12 +29,15 @@ cookie = { version = "0.18", features = ["private"] }
 http = "1.1"
 loco-rs = { version = "0.16" }
 oauth2 = "5.0"
-reqwest = { version = "0.12", features = ["json"] }
+reqwest = { version = "0.12", default-features = false, features = [
+  "json",
+  "rustls-tls-native-roots",
+] }
 sea-orm = { version = "1.0.0-rc.4", features = [
-    "sqlx-sqlite",
-    "sqlx-postgres",
-    "runtime-tokio-rustls",
-    "macros",
+  "sqlx-sqlite",
+  "sqlx-postgres",
+  "runtime-tokio-rustls",
+  "macros",
 ] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
@@ -49,10 +52,10 @@ tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 [dependencies.sea-orm-migration]
 version = "1.0.0-rc.1"
 features = [
-    # Enable at least one `ASYNC_RUNTIME` and `DATABASE_DRIVER` feature if you want to run migration via CLI.
-    # View the list of supported features at https://www.sea-ql.org/SeaORM/docs/install-and-config/database-and-async-runtime.
-    # e.g.
-    "runtime-tokio-rustls", # `ASYNC_RUNTIME` feature
+  # Enable at least one `ASYNC_RUNTIME` and `DATABASE_DRIVER` feature if you want to run migration via CLI.
+  # View the list of supported features at https://www.sea-ql.org/SeaORM/docs/install-and-config/database-and-async-runtime.
+  # e.g.
+  "runtime-tokio-rustls", # `ASYNC_RUNTIME` feature
 ]
 [dev-dependencies]
 axum-test = "17.2"
